@@ -15,7 +15,7 @@ export default {
       uuid = (await mojang.json()).id;
     }
 
-    const res = await fetch(`https://api.hypixel.net/v2/player?uuid=${uuid}`, {
+    const res = await fetch(`https://api.hypixel.net/v2/skyblock/profiles?uuid=${uuid}`, {
       headers: { "API-Key": env.HYPIXEL_API_KEY },
     });
     return new Response(res.body, {
