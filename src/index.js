@@ -28,10 +28,10 @@ export default {
       });
       const body = await res.json();
       if (!res.ok || !body.success) {
-        return Response.json(body, { status: res.ok ? 502 : re
+        return Response.json(body, { status: res.ok ? 502 : res.status });
       }
 
-      // Keep only what the app reads, in the same shape as Hypixel's response.
+      // Keep only what the app reads, in the same shape as Hy
       const profiles = body.profiles?.map((p) => {
         const member = p.members[uuid] ?? {};
         return {
@@ -39,7 +39,7 @@ export default {
           selected: p.selected,
           members: {
             [uuid]: {
-              player_data: { experience: member.player_data?.experience ?? {} },
+              player_data: { experience: member.player_data?.experience },
               collection: member.collection,
             },
           },
@@ -48,7 +48,7 @@ export default {
 
       return Response.json({ success: true, profiles });
     } catch (e) {
-      return Response.json({ error: "Upstream request failed"
+      return Response.json({ error: "Upstream request failed" }, { status: 502 });
     }
   },
 };
